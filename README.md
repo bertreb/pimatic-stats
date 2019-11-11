@@ -37,8 +37,8 @@ When the plugin is installed (including restart) a Stats device can be added. Be
 
 The following variables are available to you in Pimatic for the StatsDevice (after selection in de config!).
 
-* ${stats device id}.devices          - number of Devices
-* ${stats device id}.rules            - number of Rules
+* ${stats device id}.devices          - number of devices
+* ${stats device id}.rules            - number of rules
 * ${stats device id}.variables        - number of variables. Devices specific and custom
 * ${stats device id}.pages            - number of pages
 * ${stats device id}.groups           - number of groups
