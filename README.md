@@ -42,10 +42,9 @@ The following variables are available to you in Pimatic for the StatsDevice (aft
 * ${stats device id}.variables        - number of variables. Devices specific and custom
 * ${stats device id}.pages            - number of pages
 * ${stats device id}.groups           - number of groups
-* ${stats device id}.index      	  - the index based on total number of dives, rules, variables, pages and groups
-* ${stats device id}.avDevicesPage    - average number of devices per page
+* ${stats device id}.index      	  - the index based on total number of devices, rules, variables, pages and groups
 * ${stats device id}.pluginsOutdated  - number of outdated Plugins
-* ${stats device id}.pimaticOutdated  - weather Pimatic is aoutdated
+* ${stats device id}.pimaticOutdated  - weather Pimatic is outdated
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 

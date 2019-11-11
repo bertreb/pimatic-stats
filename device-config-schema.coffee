@@ -12,10 +12,9 @@ module.exports = {
         format: "table"
         items:
           enum: [
-            "devices", "rules", "variables", 
-            "pages", "groups", "plugins", 
-            "avDevicesPage", "index",
-            "pluginsOutdated", "pimaticOutdated",
+            "devices", "rules", "variables",
+            "pages", "groups", "plugins",
+            "index", "pluginsOutdated", "pimaticOutdated",
             "nodeVersion"
           ]
   }

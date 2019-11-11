@@ -27,9 +27,6 @@ module.exports = (env) ->
       @attributes = {}
       @attributeValues = {}
 
-      #env.logger.info @devMgr.getDevices()
-
-
       for _attr in @stats
         do (_attr) =>
           @attributes[_attr] =
@@ -50,7 +47,7 @@ module.exports = (env) ->
       @attributeValues.pages = lastState?.pages?.value or 0
       @attributeValues.groups = lastState?.groups?.value or 0
       @attributeValues.index = lastState?.index?.value or 0
-      @attributeValues.avDevicesPage = lastState?.avDevicesPage?.value or 0
+      #@attributeValues.avDevicesPage = lastState?.avDevicesPage?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
       @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or 0
@@ -58,7 +55,7 @@ module.exports = (env) ->
       @attributeValues.nodeVersion = lastState?.nodeVersion?.value or 0
 
       events = [
-        "deviceAdded","deviceRemoved", "ruleAdded", 
+        "deviceAdded","deviceRemoved", "ruleAdded",
         "ruleRemoved", "variableAdded", "variableRemoved",
         "pageAdded", "pageRemoved", "groupAdded", "groupRemoved"
       ]
@@ -69,8 +66,7 @@ module.exports = (env) ->
 
       @framework.on 'after init', () =>
         @refreshData()
-
-
+        
       super()
 
     refreshData: () =>
@@ -95,9 +91,9 @@ module.exports = (env) ->
         @attributeValues.rules +
         @attributeValues.variables +
         @attributeValues.plugins * 5
-
       @emit 'index', @attributeValues.index
 
+      ###
       _avDevicesPage = (_pages) ->
         _totDevices = 0
         for _page in _pages
@@ -105,6 +101,7 @@ module.exports = (env) ->
         return Number (_totDevices / _pages.length)
       @attributeValues.avDevicesPage =  _avDevicesPage(@_pages)
       @emit 'avDevicesPage', @attributeValues.avDevicesPage
+      ###
 
       @framework.pluginManager.getInstalledPluginsWithInfo()
         .then((data) =>
