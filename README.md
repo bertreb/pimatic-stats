@@ -3,7 +3,7 @@ pimatic-stats
 
 Creating statistics from a Pimatic home automation system.
 This plugin provides information on the usage of Pimatic, normaly only available via the api.
-The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparisen a pimatic-index is added. The index shows how 'heavy' the configuration is.
+The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison a pimatic-index is added. The index shows how 'heavy' the configuration is.
 
 Installation
 ------------
