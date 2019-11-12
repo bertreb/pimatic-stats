@@ -43,7 +43,7 @@ The following variables are available to you in Pimatic for the StatsDevice (aft
 * ${stats device id}.groups           - number of groups
 * ${stats device id}.index      	  - the index based on total number of devices, rules, variables, pages and groups
 * ${stats device id}.pluginsOutdated  - number of outdated Plugins
-* ${stats device id}.pimaticOutdated  - weather Pimatic is outdated
+* ${stats device id}.pimaticOutdated  - whether Pimatic is outdated
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 

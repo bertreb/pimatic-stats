@@ -10,20 +10,19 @@ module.exports = (env) ->
       deviceConfigDef = require('./device-config-schema')
       @framework.deviceManager.registerDeviceClass('StatsDevice', {
         configDef: deviceConfigDef.StatsDevice,
-        createCallback: (config, lastState) => new StatsDevice(config, lastState, @framework, deviceConfigDef)
+        createCallback: (config, lastState) => new StatsDevice(config, lastState, @framework)
       })
 
   plugin = new StatsPlugin
 
   class StatsDevice extends env.devices.Device
 
-    constructor: (@config, lastState, @framework, deviceConfigDef) ->
+    constructor: (@config, lastState, @framework) ->
 
       @id = @config.id
       @name = @config.name
       @test = @config.test
-      @defConfig = deviceConfigDef.StatsDevice
-      @stats = if @config.statistics? then @config.statistics else null#.properties
+      @stats = if @config.statistics? then @config.statistics else null
       @attributes = {}
       @attributeValues = {}
 
@@ -47,11 +46,9 @@ module.exports = (env) ->
       @attributeValues.pages = lastState?.pages?.value or 0
       @attributeValues.groups = lastState?.groups?.value or 0
       @attributeValues.index = lastState?.index?.value or 0
-      #@attributeValues.avDevicesPage = lastState?.avDevicesPage?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
       @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or 0
-      @attributeValues.checkDatabase = lastState?.checkDatabase?.value or 0
       @attributeValues.nodeVersion = lastState?.nodeVersion?.value or 0
 
       events = [
@@ -60,13 +57,42 @@ module.exports = (env) ->
         "pageAdded", "pageRemoved", "groupAdded", "groupRemoved"
       ]
 
-      for event in events
-        @framework.on event, () =>
+      for _event in events
+        @framework.on _event, () =>
           @refreshData()
 
       @framework.on 'after init', () =>
         @refreshData()
-        
+
+      @framework.pluginManager.getInstalledPluginsWithInfo()
+        .then((data) =>
+          @attributeValues.plugins = data.length
+          @emit 'plugins', @attributeValues.plugins
+        )
+        .catch((err) ->
+          env.logger.error err.message
+        )
+      
+      @framework.pluginManager.getOutdatedPlugins()
+        .then((data) =>
+          @attributeValues.pluginsOutdated = data.length
+          @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
+        )
+        .catch((err) ->
+          env.logger.error err.message
+        )
+
+      @framework.pluginManager.isPimaticOutdated()
+        .then((data) =>
+          @attributeValues.pimaticOutdated = if data then "yes" else "no"
+          @emit 'pimaticOutdated', @attributeValues.pimaticOutdated
+        )
+        .catch((err) ->
+          env.logger.error err.message
+        )
+      @attributeValues.nodeVersion = String process.versions.node
+      @emit 'nodeVersion', @attributeValues.nodeVersion
+
       super()
 
     refreshData: () =>
@@ -93,44 +119,6 @@ module.exports = (env) ->
         @attributeValues.plugins * 5
       @emit 'index', @attributeValues.index
 
-      ###
-      _avDevicesPage = (_pages) ->
-        _totDevices = 0
-        for _page in _pages
-          _totDevices += Number (_page.devices).length
-        return Number (_totDevices / _pages.length)
-      @attributeValues.avDevicesPage =  _avDevicesPage(@_pages)
-      @emit 'avDevicesPage', @attributeValues.avDevicesPage
-      ###
-
-      @framework.pluginManager.getInstalledPluginsWithInfo()
-        .then((data) =>
-          @attributeValues.plugins = data.length
-          @emit 'plugins', @attributeValues.plugins
-        )
-        .catch((err) ->
-          env.logger.error err.message
-        )
-      ###
-      @framework.pluginManager.getOutdatedPlugins()
-        .then((data) =>
-          @attributeValues.pluginsOutdated = data.length
-          @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
-        )
-        .catch((err) ->
-          env.logger.error err.message
-        )
-      ###
-      @framework.pluginManager.isPimaticOutdated()
-        .then((data) =>
-          @attributeValues.pimaticOutdated = if data then "yes" else "no"
-          @emit 'pimaticOutdated', @attributeValues.pimaticOutdated
-        )
-        .catch((err) ->
-          env.logger.error err.message
-        )
-      @attributeValues.nodeVersion = String process.versions.node
-      @emit 'nodeVersion', @attributeValues.nodeVersion
 
     destroy: ->
       super()
