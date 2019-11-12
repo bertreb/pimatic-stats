@@ -4,3 +4,5 @@
 	* initial release
 * 20191112, v0.0.2
 	* show initially all variables
+* 20191112, v0.0.3
+	* hourly check of outdated
