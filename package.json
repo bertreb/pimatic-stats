@@ -28,9 +28,7 @@
   "peerDependencies": {
     "pimatic": "0.9.*"
   },
-  "dependencies": {
-    "cron": "^1.7.2"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=4",
     "npm": ">=2"
