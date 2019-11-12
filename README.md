@@ -3,7 +3,7 @@ pimatic-stats
 
 Creating statistics from a Pimatic home automation system.
 This plugin provides information on the usage of Pimatic, normally only available via the api.
-The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices, rules, variables, plugins, etc are used.
+The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices and rules are used.
 
 Installation
 ------------
