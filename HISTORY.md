@@ -22,3 +22,5 @@
 	* first minor release
 * 20191112, v0.1.1
 	* index algorithm updated
+* 20191112, v0.1.2
+	* Update timer to once a day at midnight for check outdated Plugins and Pimatic 

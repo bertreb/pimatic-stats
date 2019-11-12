@@ -83,20 +83,22 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
+        @framework.pluginManager.isPimaticOutdated()
+          .then((data) =>
+            @attributeValues.pimaticOutdated = if data then "yes" else "no"
+            @emit 'pimaticOutdated', @attributeValues.pimaticOutdated
+          )
+          .catch((err) ->
+            env.logger.error err.message
+          )
+        @attributeValues.nodeVersion = String process.versions.node
+        @emit 'nodeVersion', @attributeValues.nodeVersion
+
         @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
+
       scheduleCheckOutdated()
 
 
-      @framework.pluginManager.isPimaticOutdated()
-        .then((data) =>
-          @attributeValues.pimaticOutdated = if data then "yes" else "no"
-          @emit 'pimaticOutdated', @attributeValues.pimaticOutdated
-        )
-        .catch((err) ->
-          env.logger.error err.message
-        )
-      @attributeValues.nodeVersion = String process.versions.node
-      @emit 'nodeVersion', @attributeValues.nodeVersion
 
       super()
 
