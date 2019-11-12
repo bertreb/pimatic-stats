@@ -19,7 +19,7 @@
     "pimatic",
     "statistics"
   ],
-  "version": "0.0.9",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bertreb/pimatic-stats.git"
@@ -28,7 +28,9 @@
   "peerDependencies": {
     "pimatic": "0.9.*"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cron": "^1.7.2"
+  },
   "engines": {
     "node": ">=4",
     "npm": ">=2"

@@ -3,7 +3,6 @@ module.exports = (env) ->
   assert = env.require 'cassert'
   types = env.require('decl-api').types
 
-
   class StatsPlugin extends env.plugins.Plugin
     init: (app, @framework, @config) =>
 
@@ -74,12 +73,9 @@ module.exports = (env) ->
         )
 
       scheduleCheckOutdated = () =>
-        #@_updateTimeout = setTimeout =>
-        if @_destroyed then return
         @framework.pluginManager.getOutdatedPlugins()
-          #test
           .then((data) =>
-            for i,outdated of data
+            for outdated in data
               env.logger.info "Outdated plugin: '" + outdated.plugin + "'"
             @attributeValues.pluginsOutdated = data.length
             @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
@@ -87,8 +83,9 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
-        @_updateTimeout = setTimeout(scheduleCheckOutdated, 3600000) # 1 hour
+        @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
       scheduleCheckOutdated()
+
 
       @framework.pluginManager.isPimaticOutdated()
         .then((data) =>
@@ -127,9 +124,14 @@ module.exports = (env) ->
         @attributeValues.plugins * 5
       @emit 'size', @attributeValues.size
 
+    _getTimeTillTomorrow: ->
+      midnight = new Date()
+      midnight.setHours(24,0,0,0)
+      interval = midnight.getTime() - Date.now()
+      return interval
 
     destroy: ->
-      clearTimeout(@_updateTimeout)
+      clearTimeout @_scheduleOutdatedTimer
       super()
 
   return plugin

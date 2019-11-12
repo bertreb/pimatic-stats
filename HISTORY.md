@@ -18,3 +18,5 @@
 	* edit timer en outdated plugin function
 * 20191112, v0.0.9
 	* updateCheck timer set back to 1 hour
+* 20191112, v0.1.0
+	* first minor release

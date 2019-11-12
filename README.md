@@ -42,7 +42,7 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.pages            - number of pages
 * ${stats device id}.groups           - number of groups
 * ${stats device id}.size      	      - the size of the Pimatic system,  based on total number of devices, rules, variables, pages and groups
-* ${stats device id}.pluginsOutdated  - number of outdated Plugins. This is checked every hour.
+* ${stats device id}.pluginsOutdated  - number of outdated Plugins. This is checked every day at midnight.
 * ${stats device id}.pimaticOutdated  - whether Pimatic is outdated
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
