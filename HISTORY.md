@@ -14,3 +14,5 @@
 	* timerCancel added to destroy
 * 20191112, v0.0.7
 	* update timer
+* 20191112, v0.0.8
+	* edit timer en outdated plugin function

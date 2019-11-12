@@ -74,19 +74,20 @@ module.exports = (env) ->
         )
 
       scheduleCheckOutdated = () =>
-        @_updateTimeout = setTimeout =>
-          if @_destroyed then return
-          @framework.pluginManager.getOutdatedPlugins()
-            #test
-            .then((data) =>
-              @attributeValues.pluginsOutdated = data.length
-              @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
-            )
-            .catch((err) ->
-              env.logger.error err.message
-            )
-          scheduleCheckOutdated()
-        , 3600000 # 1 hour
+        #@_updateTimeout = setTimeout =>
+        if @_destroyed then return
+        @framework.pluginManager.getOutdatedPlugins()
+          #test
+          .then((data) =>
+            for i,outdated of data
+              env.logger.info "Outdated plugin: '" + outdated.plugin + "'"
+            @attributeValues.pluginsOutdated = data.length
+            @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
+          )
+          .catch((err) ->
+            env.logger.error err.message
+          )
+        @_updateTimeout = setTimeout(scheduleCheckOutdated, 30000) # 1 hour
       scheduleCheckOutdated()
 
       @framework.pluginManager.isPimaticOutdated()
