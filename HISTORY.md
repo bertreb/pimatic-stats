@@ -12,3 +12,5 @@
 	* bugfix
 * 20191112, v0.0.6
 	* timerCancel added to destroy
+* 20191112, v0.0.7
+	* update timer
