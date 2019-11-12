@@ -1,6 +1,6 @@
 {
   "name": "pimatic-stats",
-  "description": "Get Pimatic statistics from Pimatic home automation system",
+  "description": "Get Pimatic statistics from a Pimatic home automation system",
   "author": {
     "name": "Bert Gierveld",
     "email": "gitbertreb@gmail.com",
@@ -19,7 +19,7 @@
     "pimatic",
     "statistics"
   ],
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bertreb/pimatic-stats.git"

@@ -3,7 +3,7 @@ pimatic-stats
 
 Creating statistics from a Pimatic home automation system.
 This plugin provides information on the usage of Pimatic, normally only available via the api.
-The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison a pimatic-index is added. The index shows how big the configuration is. The higher the index the more devices, rules, variables, plugins, etc are used.
+The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices, rules, variables, plugins, etc are used.
 
 Installation
 ------------
@@ -41,8 +41,8 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.variables        - number of variables. Devices specific and custom
 * ${stats device id}.pages            - number of pages
 * ${stats device id}.groups           - number of groups
-* ${stats device id}.index      	  - the index based on total number of devices, rules, variables, pages and groups
-* ${stats device id}.pluginsOutdated  - number of outdated Plugins
+* ${stats device id}.size      	      - the size of the Pimatic system,  based on total number of devices, rules, variables, pages and groups
+* ${stats device id}.pluginsOutdated  - number of outdated Plugins. This is checked every hour.
 * ${stats device id}.pimaticOutdated  - whether Pimatic is outdated
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
