@@ -52,7 +52,7 @@ module.exports = (env) ->
       @attributeValues.nodeVersion = lastState?.nodeVersion?.value or 0
 
       events = [
-        "deviceAdded","deviceRemoved", "ruleAdded",
+        "deviceAdded", "deviceRemoved", "ruleAdded",
         "ruleRemoved", "variableAdded", "variableRemoved",
         "pageAdded", "pageRemoved", "groupAdded", "groupRemoved"
       ]
