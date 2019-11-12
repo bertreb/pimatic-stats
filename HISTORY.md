@@ -8,3 +8,5 @@
 	* hourly check of outdated
 * 20191112, v0.0.4
 	* index changed to size
+* 20191112, v0.0.5
+	* bugfix
