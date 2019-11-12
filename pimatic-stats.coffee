@@ -87,7 +87,7 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
-        @_updateTimeout = setTimeout(scheduleCheckOutdated, 30000) # 1 hour
+        @_updateTimeout = setTimeout(scheduleCheckOutdated, 3600000) # 1 hour
       scheduleCheckOutdated()
 
       @framework.pluginManager.isPimaticOutdated()
