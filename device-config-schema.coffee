@@ -11,7 +11,7 @@ module.exports = {
         default: [
           "devices", "rules", "variables",
           "pages", "groups", "plugins",
-          "size", "pluginsOutdated", "pimaticOutdated",
+          "index", "pluginsOutdated", "pimaticOutdated",
           "nodeVersion"
         ]
         format: "table"
@@ -19,7 +19,7 @@ module.exports = {
           enum: [
             "devices", "rules", "variables",
             "pages", "groups", "plugins",
-            "size", "pluginsOutdated", "pimaticOutdated",
+            "index", "pluginsOutdated", "pimaticOutdated",
             "nodeVersion"
           ]
   }

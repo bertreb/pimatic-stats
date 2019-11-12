@@ -44,7 +44,7 @@ module.exports = (env) ->
       @attributeValues.variables = lastState?.variables?.value or 0
       @attributeValues.pages = lastState?.pages?.value or 0
       @attributeValues.groups = lastState?.groups?.value or 0
-      @attributeValues.size = lastState?.size?.value or 0
+      @attributeValues.index = lastState?.index?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
       @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or 0
@@ -117,12 +117,10 @@ module.exports = (env) ->
       @attributeValues.pages = Number (@_pages).length
       @emit 'pages', @attributeValues.pages
 
-      @attributeValues.size =
-        @attributeValues.devices * 2 +
-        @attributeValues.rules +
-        @attributeValues.variables +
-        @attributeValues.plugins * 5
-      @emit 'size', @attributeValues.size
+      @attributeValues.index = 
+        @attributeValues.devices * 
+        @attributeValues.rules
+      @emit 'index', @attributeValues.index
 
     _getTimeTillTomorrow: ->
       midnight = new Date()
