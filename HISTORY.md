@@ -10,3 +10,5 @@
 	* index changed to size
 * 20191112, v0.0.5
 	* bugfix
+* 20191112, v0.0.6
+	* timerCancel added to destroy
