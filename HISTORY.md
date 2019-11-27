@@ -23,4 +23,6 @@
 * 20191112, v0.1.1
 	* index algorithm updated
 * 20191112, v0.1.2
-	* Update timer to once a day at midnight for check outdated Plugins and Pimatic 
+	* Update timer to once a day at midnight for check outdated Plugins and Pimatic
+* 201911287, v0.1.3
+	* Update README.md

@@ -91,13 +91,11 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
-        @attributeValues.nodeVersion = String process.versions.node
-        @emit 'nodeVersion', @attributeValues.nodeVersion
-
         @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
-
       scheduleCheckOutdated()
 
+      @attributeValues.nodeVersion = String process.versions.node
+      @emit 'nodeVersion', @attributeValues.nodeVersion
 
 
       super()

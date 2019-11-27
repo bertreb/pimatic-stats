@@ -1,9 +1,9 @@
 pimatic-stats
 ===================
 
-Creating statistics from a Pimatic home automation system.
-This plugin provides information on the usage of Pimatic, normally only available via the api.
-The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the Gui. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices and rules are used.
+Getting statistics from a Pimatic home automation system.
+This plugin provides information on the configuration of your Pimatic system. This information is normally only available via the api.
+The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the GUI. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices and rules are used.
 
 Installation
 ------------
@@ -19,7 +19,7 @@ To enable the Stats plugin add this to the plugins section via the GUI or add it
 
 Stats device
 -----------------
-When the plugin is installed (including restart) a Stats device can be added. Below the settings with the default values.
+When the plugin is installed (including restart) a Stats device can be added. Below the settings, with the items that are available.
 
 ```
 {
@@ -47,7 +47,7 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 
-In the gui an attribute becomes visible when added in the device config.
+In the GUI an attribute becomes visible when added in the device config.
 
 ---------
 
