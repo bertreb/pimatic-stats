@@ -26,7 +26,7 @@ When the plugin is installed (including restart) a Stats device can be added. Be
   "id": "<stats-device-id>",
   "class": "StatsDevice",
   "statistics":
-  	 "items": [
+    "items": [
        "devices", "rules", "variables", "pages", "groups", "plugins", "pluginsOutdated", "pimaticOutdated",
        "nodeVersion"
      ]
