@@ -2,6 +2,7 @@ module.exports = (env) ->
   Promise = env.require 'bluebird'
   assert = env.require 'cassert'
   types = env.require('decl-api').types
+  _ = require('lodash')
 
   class StatsPlugin extends env.plugins.Plugin
     init: (app, @framework, @config) =>
@@ -21,7 +22,8 @@ module.exports = (env) ->
       @id = @config.id
       @name = @config.name
       @test = @config.test
-      @stats = if @config.statistics? then @config.statistics else null
+      @stats = @config.statistics
+      #@stats = if @config.statistics? then @config.statistics else null
       @attributes = {}
       @attributeValues = {}
 
@@ -32,12 +34,15 @@ module.exports = (env) ->
             type: types.number
             label: _attr
             acronym: _attr
-          @attributeValues[_attr] = 0
           @_createGetter(_attr, =>
             return Promise.resolve @attributeValues[_attr]
           )
-      @attributes.pimaticOutdated.type = types.string
-      @attributes.nodeVersion.type = types.string
+      if @attributes?.pimaticOutdated?
+        @attributes?.pimaticOutdated.type = types.string
+      if @attributes?.nodeVersion?
+        @attributes.nodeVersion.type = types.string
+      if @attributes?.database?
+        @attributes.database.type = types.string
 
       @attributeValues.devices = lastState?.devices?.value or 0
       @attributeValues.rules = lastState?.rules?.value or 0
@@ -47,8 +52,10 @@ module.exports = (env) ->
       @attributeValues.index = lastState?.index?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
-      @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or 0
-      @attributeValues.nodeVersion = lastState?.nodeVersion?.value or 0
+      @attributeValues.database = lastState?.database?.value or ""
+      @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or ""
+      @attributeValues.nodeVersion = lastState?.nodeVersion?.value or ""
+
 
       events = [
         "deviceAdded", "deviceRemoved", "ruleAdded",
@@ -60,9 +67,6 @@ module.exports = (env) ->
         @framework.on _event, () =>
           @refreshData()
 
-      @framework.on 'after init', () =>
-        @refreshData()
-
       @framework.pluginManager.getInstalledPluginsWithInfo()
         .then((data) =>
           @attributeValues.plugins = data.length
@@ -71,6 +75,10 @@ module.exports = (env) ->
         .catch((err) ->
           env.logger.error err.message
         )
+
+      @framework.on 'after init' , () =>
+        @refreshData()
+
 
       scheduleCheckOutdated = () =>
         @framework.pluginManager.getOutdatedPlugins()
@@ -81,7 +89,7 @@ module.exports = (env) ->
             @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
           )
           .catch((err) ->
-            env.logger.error err.message
+            env.logger.error "foutje"#err.message
           )
         @framework.pluginManager.isPimaticOutdated()
           .then((data) =>
@@ -91,12 +99,25 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
+        @framework.database.checkDatabase()
+          .then((problems) =>
+            _size = _.size(problems)
+            if _size is 0
+              @attributeValues.database = "ok"
+            else
+              @attributeValues.database = (String _size) + " problems"
+            @emit 'database', @attributeValues.database
+          )
+          .catch((err) ->
+            env.logger.error err.message
+          )
+
         @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
+
       scheduleCheckOutdated()
 
       @attributeValues.nodeVersion = String process.versions.node
       @emit 'nodeVersion', @attributeValues.nodeVersion
-
 
       super()
 
@@ -117,8 +138,8 @@ module.exports = (env) ->
       @attributeValues.pages = Number (@_pages).length
       @emit 'pages', @attributeValues.pages
 
-      @attributeValues.index = 
-        @attributeValues.devices * 
+      @attributeValues.index =
+        @attributeValues.devices *
         @attributeValues.rules
       @emit 'index', @attributeValues.index
 
