@@ -26,7 +26,8 @@
 	* Update timer to once a day at midnight for check outdated Plugins and Pimatic
 * 20191127, v0.1.3
 	* Update README.md
-* 20191129, v0.1.6
+* 20191129, v0.1.7
 	* Add database check
 	* Initial empty GUI
 	* added dependency
+	* edit README

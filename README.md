@@ -2,8 +2,7 @@ pimatic-stats
 ===================
 
 Getting statistics from a Pimatic home automation system.
-This plugin provides information on the configuration of your Pimatic system. This information is normally only available via the api.
-The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the GUI. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices and rules are used.
+This plugin provides information on the configuration of your Pimatic system. This information is normally only available via the api. The number of devices, rules, variables, pages and groups can be selected and will be available as a variable and visible via the GUI. For comparison the 'size' of Pimatic is added. The size shows how big the configuration is. The higher the size the more devices and rules are used.
 
 Installation
 ------------
@@ -27,7 +26,7 @@ When the plugin is installed (including restart) a Stats device can be added. Be
   "class": "StatsDevice",
   "statistics":
     "items": [
-       "devices", "rules", "variables", "pages", "groups", "plugins", "pluginsOutdated", "pimaticOutdated",
+       "devices", "rules", "variables", "pages", "groups", "plugins", "index", "database", "pluginsOutdated", "pimaticOutdated",
        "nodeVersion"
      ]
 }
@@ -41,13 +40,15 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.variables        - number of variables. Devices specific and custom
 * ${stats device id}.pages            - number of pages
 * ${stats device id}.groups           - number of groups
-* ${stats device id}.size      	      - the size of the Pimatic system,  based on total number of devices, rules, variables, pages and groups
+* ${stats device id}.index      	    - the size of the Pimatic system,  based on total number of devices and rules
 * ${stats device id}.pluginsOutdated  - number of outdated Plugins. This is checked every day at midnight.
+* ${stats device id}.database         - number of errors in the pimatic database. The number of errors is shown or if none "ok". This is checked every day at midnight.
 * ${stats device id}.pimaticOutdated  - whether Pimatic is outdated. This is checked every day at midnight.
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 
 In the GUI an attribute becomes visible when added in the device config.
+When you remove errors in the database the number of errors shown in this device is not updated until midnight.
 
 ---------
 

@@ -26,6 +26,7 @@ module.exports = (env) ->
       #@stats = if @config.statistics? then @config.statistics else null
       @attributes = {}
       @attributeValues = {}
+      @variablesValueChanges = 0
 
       for _attr in @stats
         do (_attr) =>
@@ -49,6 +50,7 @@ module.exports = (env) ->
       @attributeValues.variables = lastState?.variables?.value or 0
       @attributeValues.pages = lastState?.pages?.value or 0
       @attributeValues.groups = lastState?.groups?.value or 0
+      @attributeValues.variablesHour = lastState?.variablesHour?.value or 0
       @attributeValues.index = lastState?.index?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
@@ -58,14 +60,15 @@ module.exports = (env) ->
 
 
       events = [
-        "deviceAdded", "deviceRemoved", "ruleAdded",
-        "ruleRemoved", "variableAdded", "variableRemoved",
+        "deviceAdded", "ruleAdded", "ruleRemoved", "variableAdded",
+        "deviceRemoved", "variableRemoved",
         "pageAdded", "pageRemoved", "groupAdded", "groupRemoved"
       ]
 
       for _event in events
         @framework.on _event, () =>
           @refreshData()
+          @checkDB()
 
       @framework.pluginManager.getInstalledPluginsWithInfo()
         .then((data) =>
@@ -78,7 +81,6 @@ module.exports = (env) ->
 
       @framework.on 'after init' , () =>
         @refreshData()
-
 
       scheduleCheckOutdated = () =>
         @framework.pluginManager.getOutdatedPlugins()
@@ -120,6 +122,20 @@ module.exports = (env) ->
       @emit 'nodeVersion', @attributeValues.nodeVersion
 
       super()
+
+    checkDB: () =>
+      @framework.database.checkDatabase()
+        .then((problems) =>
+          _size = _.size(problems)
+          if _size is 0
+            @attributeValues.database = "ok"
+          else
+            @attributeValues.database = (String _size) + " problems"
+          @emit 'database', @attributeValues.database
+        )
+        .catch((err) ->
+          env.logger.error err.message
+        )
 
     refreshData: () =>
       @attributeValues.devices = Number (@framework.deviceManager.getDevices()).length
