@@ -10,14 +10,14 @@ module.exports = (env) ->
       deviceConfigDef = require('./device-config-schema')
       @framework.deviceManager.registerDeviceClass('StatsDevice', {
         configDef: deviceConfigDef.StatsDevice,
-        createCallback: (config, lastState) => new StatsDevice(config, lastState, @framework)
+        createCallback: (config, lastState) => new StatsDevice(config, lastState, @framework, deviceConfigDef)
       })
 
   plugin = new StatsPlugin
 
   class StatsDevice extends env.devices.Device
 
-    constructor: (@config, lastState, @framework) ->
+    constructor: (@config, lastState, @framework, deviceConfig) ->
 
       @id = @config.id
       @name = @config.name
@@ -26,15 +26,25 @@ module.exports = (env) ->
       #@stats = if @config.statistics? then @config.statistics else null
       @attributes = {}
       @attributeValues = {}
-      @variablesValueChanges = 0
 
-      for _attr in @stats
+      @show = @hide = false
+      @attrList = deviceConfig.StatsDevice.properties.statistics.items.enum
+
+      if @config.show is "all"
+        @show = false
+        @hide = true
+      else
+        @show = true
+        @hide = false
+
+      for _attr in @attrList
         do (_attr) =>
           @attributes[_attr] =
             description: _attr
             type: types.number
             label: _attr
             acronym: _attr
+            hidden: @show
           @_createGetter(_attr, =>
             return Promise.resolve @attributeValues[_attr]
           )
@@ -45,12 +55,15 @@ module.exports = (env) ->
       if @attributes?.database?
         @attributes.database.type = types.string
 
+      for _attr in @stats
+        do (_attr) =>
+          @attributes[_attr].hidden = @hide
+
       @attributeValues.devices = lastState?.devices?.value or 0
       @attributeValues.rules = lastState?.rules?.value or 0
       @attributeValues.variables = lastState?.variables?.value or 0
       @attributeValues.pages = lastState?.pages?.value or 0
       @attributeValues.groups = lastState?.groups?.value or 0
-      @attributeValues.variablesHour = lastState?.variablesHour?.value or 0
       @attributeValues.index = lastState?.index?.value or 0
       @attributeValues.plugins = lastState?.plugins?.value or 0
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0

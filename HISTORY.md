@@ -31,3 +31,5 @@
 	* Initial empty GUI
 	* added dependency
 	* edit README
+* 20191130, v0.1.8
+	* flexibel show/hide of variables possible

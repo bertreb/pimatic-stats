@@ -47,7 +47,7 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 
-In the GUI an attribute becomes visible when added in the device config.
+All variables are available and can be used without adding the variable to the GUI. In the GUI an variable becomes visible when added in the device config. After changing the config, reload the page to make the change visible.
 When you remove errors in the database the number of errors shown in this device is not updated until midnight.
 
 ---------
