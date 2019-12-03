@@ -33,3 +33,6 @@
 	* edit README
 * 20191130, v0.1.8
 	* flexibel show/hide of variables possible
+* 20191203, v0.1.9
+	* hide sparklines by default
+	* add pimaticVersion and npmVersion

@@ -45,6 +45,7 @@ module.exports = (env) ->
             label: _attr
             acronym: _attr
             hidden: @show
+            displaySparkline: false
           @_createGetter(_attr, =>
             return Promise.resolve @attributeValues[_attr]
           )
@@ -54,6 +55,10 @@ module.exports = (env) ->
         @attributes.nodeVersion.type = types.string
       if @attributes?.database?
         @attributes.database.type = types.string
+      if @attributes?.npmVersion?
+        @attributes.npmVersion.type = types.string
+      if @attributes?.pimaticVersion?
+        @attributes.pimaticVersion.type = types.string
 
       for _attr in @stats
         do (_attr) =>
@@ -69,6 +74,8 @@ module.exports = (env) ->
       @attributeValues.pluginsOutdated = lastState?.pluginsOutdated?.value or 0
       @attributeValues.database = lastState?.database?.value or ""
       @attributeValues.pimaticOutdated = lastState?.pimaticOutdated?.value or ""
+      @attributeValues.pimaticVersion = lastState?.pimaticVersion?.value or ""
+      @attributeValues.npmVersion = lastState?.npmVersion?.value or ""
       @attributeValues.nodeVersion = lastState?.nodeVersion?.value or ""
 
 
@@ -114,6 +121,20 @@ module.exports = (env) ->
           .catch((err) ->
             env.logger.error err.message
           )
+
+        @packageJson = @framework.pluginManager.getInstalledPackageInfo('pimatic')
+        @attributeValues.pimaticVersion = String @packageJson.version
+        @emit 'pimaticVersion', @attributeValues.pimaticVersion
+
+        @framework.pluginManager.checkNpmVersion()
+          .then((data) =>
+            @attributeValues.npmVersion = String data
+            @emit 'npmVersion', @attributeValues.npmVersion
+          )
+          .catch((err) ->
+            env.logger.error err.message
+          )
+
         @framework.database.checkDatabase()
           .then((problems) =>
             _size = _.size(problems)
