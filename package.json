@@ -19,7 +19,7 @@
     "pimatic",
     "statistics"
   ],
-  "version": "0.1.10",
+  "version": "0.1.11",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bertreb/pimatic-stats.git"

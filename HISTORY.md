@@ -36,6 +36,6 @@
 * 20191203, v0.1.9
 	* hide sparklines by default
 	* add pimaticVersion and npmVersion
-* 20200103, v0.1.10
+* 20200103, v0.1.11
 	* set midnight update timer a little later to avoid pimatic bad gateway
 	* small edits

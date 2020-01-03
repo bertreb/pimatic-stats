@@ -23,20 +23,17 @@ module.exports = (env) ->
       @name = @config.name
       @test = @config.test
       @stats = @config.statistics
-      #@stats = if @config.statistics? then @config.statistics else null
       @attributes = {}
       @attributeValues = {}
 
-      @show = @hide = false
+      @show = true
+      @hide = false
+      if @config.show?
+        if @config.show is "none"
+          @show = false
+          @hide = true
+
       @attrList = deviceConfig.StatsDevice.properties.statistics.items.enum
-
-      if @config.show is "all"
-        @show = false
-        @hide = true
-      else
-        @show = true
-        @hide = false
-
       for _attr in @attrList
         do (_attr) =>
           @attributes[_attr] =
