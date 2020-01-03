@@ -17,7 +17,7 @@ module.exports = {
           enum: [
             "devices", "rules", "variables",
             "pages", "groups", "plugins", "database",
-            "index", "pluginsOutdated",  "pimaticVersion", "pimaticOutdated", 
+            "index", "pluginsOutdated",  "pimaticVersion", "pimaticOutdated",
             "npmVersion", "nodeVersion"
           ]
     }
