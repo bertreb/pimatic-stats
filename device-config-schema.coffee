@@ -9,6 +9,7 @@ module.exports = {
         description: "If 'all': variables will be shown in the GUI except the variables selected in Statistics. If 'none': nothing will be shown in the GUI, except the ones selected in Statistics."
         type: "string"
         enum: ["none", "all"]
+        default: "all"
       statistics:
         description: "Pimatic statistics that will be hidden (show=all) or shown (show=none) in the GUI."
         type: "array"
