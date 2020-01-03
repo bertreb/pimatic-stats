@@ -96,7 +96,7 @@ module.exports = (env) ->
           @emit 'plugins', @attributeValues.plugins
         )
         .catch((err) ->
-          env.logger.error err.message
+          env.logger.error "error getting plugin info: " + err.message
         )
 
       @framework.on 'after init' , () =>
@@ -111,15 +111,16 @@ module.exports = (env) ->
             @emit 'pluginsOutdated', @attributeValues.pluginsOutdated
           )
           .catch((err) ->
-            env.logger.error "foutje"#err.message
+            env.logger.error "error checking outdatedPlugins: " + err.message
           )
+
         @framework.pluginManager.isPimaticOutdated()
           .then((data) =>
             @attributeValues.pimaticOutdated = if data then "yes" else "no"
             @emit 'pimaticOutdated', @attributeValues.pimaticOutdated
           )
           .catch((err) ->
-            env.logger.error err.message
+            env.logger.error "error checking isPimaticOutdated: " +  err.message
           )
 
         @packageJson = @framework.pluginManager.getInstalledPackageInfo('pimatic')
@@ -132,7 +133,7 @@ module.exports = (env) ->
             @emit 'npmVersion', @attributeValues.npmVersion
           )
           .catch((err) ->
-            env.logger.error err.message
+            env.logger.error "error checking checkNpmVersion: " + err.message
           )
 
         @framework.database.checkDatabase()
@@ -141,11 +142,11 @@ module.exports = (env) ->
             if _size is 0
               @attributeValues.database = "ok"
             else
-              @attributeValues.database = (String _size) + " problems"
+              @attributeValues.database = (String _size) + " problem" + (if _size > 1 then "s")
             @emit 'database', @attributeValues.database
           )
           .catch((err) ->
-            env.logger.error err.message
+            env.logger.error "error checking database: " + err.message
           )
 
         @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
@@ -195,7 +196,7 @@ module.exports = (env) ->
 
     _getTimeTillTomorrow: ->
       midnight = new Date()
-      midnight.setHours(24,0,0,0)
+      midnight.setHours(24,45,0,0)
       interval = midnight.getTime() - Date.now()
       return interval
 
