@@ -24,10 +24,11 @@ When the plugin is installed (including restart) a Stats device can be added. Be
 {
   "id": "<stats-device-id>",
   "class": "StatsDevice",
+  "show": ["none", "all"]
   "statistics":
     "items": [
-       "devices", "rules", "variables", "pages", "groups", "plugins", "database", 
-       "index", "pluginsOutdated", "pimaticVersion", pimaticOutdated", "npmVersion", 
+       "devices", "rules", "variables", "pages", "groups", "plugins", "database",
+       "index", "pluginsOutdated", "pimaticVersion", pimaticOutdated", "npmVersion",
        "nodeVersion"
      ]
 }
@@ -50,7 +51,9 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 
-All variables are available and can be used without adding the variable to the GUI. In the GUI an variable becomes visible when added in the device config. After changing the config, reload the page to make the change visible. Sparklines are disabled by default.
+All variables are available and can be used without adding the variable to the GUI. In the device config you can set "show" to "all". All variables will become visible except the variables you add in "statistics". When you set "show" to "none" only the variables that are added in "statistics" are shown.
+After changing the config, reload the page to make the change visible. 
+Sparklines are disabled by default.
 When you remove errors in the database the number of errors shown in this device is not updated until midnight.
 
 ---------
