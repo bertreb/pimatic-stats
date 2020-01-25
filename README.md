@@ -44,15 +44,15 @@ The following variables are available to you in Pimatic for the StatsDevice. All
 * ${stats device id}.groups           - number of groups
 * ${stats device id}.index      	    - the size of the Pimatic system,  based on total number of devices and rules
 * ${stats device id}.pluginsOutdated  - number of outdated Plugins. This is checked every day at midnight.
-* ${stats device id}.database         - number of errors in the pimatic database. The number of errors is shown or if none "ok". This is checked every day at midnight.
-* ${stats device id}.pimaticVersion   - Pimatic version. This is checked every day at midnight.
-* ${stats device id}.pimaticOutdated  - whether Pimatic is outdated. This is checked every day at midnight.
-* ${stats device id}.npmVersion   	  - Npm version. This is checked every day at midnight.
+* ${stats device id}.database         - number of errors in the pimatic database. The number of errors is shown or if none "ok". This is checked every day.
+* ${stats device id}.pimaticVersion   - Pimatic version. This is checked every day.
+* ${stats device id}.pimaticOutdated  - whether Pimatic is outdated. This is checked every day.
+* ${stats device id}.npmVersion   	  - Npm version. This is checked every day.
 * ${stats device id}.nodeVersion      - actual Node version Pimatic is using
 
 
 All variables are available and can be used without adding the variable to the GUI. In the device config you can set "show" to "all". All variables will become visible except the variables you add in "statistics". When you set "show" to "none" only the variables that are added in "statistics" are shown.
-After changing the config, reload the page to make the change visible. 
+After changing the config, reload the page to make the change visible.
 Sparklines are disabled by default.
 When you remove errors in the database the number of errors shown in this device is not updated until midnight.
 

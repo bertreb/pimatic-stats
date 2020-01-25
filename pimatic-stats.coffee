@@ -147,7 +147,7 @@ module.exports = (env) ->
             env.logger.error "error checking database: " + err.message
           )
 
-        @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillTomorrow())
+        @_scheduleOutdatedTimer = setTimeout(scheduleCheckOutdated, @_getTimeTillNextUpdate())
 
       scheduleCheckOutdated()
 
@@ -192,10 +192,9 @@ module.exports = (env) ->
         @attributeValues.rules
       @emit 'index', @attributeValues.index
 
-    _getTimeTillTomorrow: ->
-      midnight = new Date()
-      midnight.setHours(24,45,0,0)
-      interval = midnight.getTime() - Date.now()
+    _getTimeTillNextUpdate: ->
+      #22 hours + 4 hours random
+      interval = 79200000 + Math.round(14400 * Math.random())
       return interval
 
     destroy: ->

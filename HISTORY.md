@@ -39,3 +39,5 @@
 * 20200103, v0.1.13
 	* set midnight update timer a little later to avoid pimatic bad gateway
 	* show/hide init update
+* 20200125, v0.1.14
+	* set daily update timer randomly to avoid npmjs data rate limit
